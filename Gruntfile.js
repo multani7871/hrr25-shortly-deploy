@@ -133,9 +133,12 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('deploy', [
-    // add your deploy tasks here
-    'build', 'shell'
-  ]);
+  grunt.registerTask('deploy', function (n) {
+    if (grunt.option('prod')) {
+      grunt.task.run(['build', 'shell']);
+    } else {
+      grunt.task.run(['build']);
+    }
+  });
 
 };
