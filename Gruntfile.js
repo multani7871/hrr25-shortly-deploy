@@ -3,6 +3,26 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      dist: {
+        src: [
+        'public/lib/jquery.js',
+        'public/lib/underscore.js',
+        'public/lib/backbone.js',
+        'public/lib/handlebars.js',
+        ],
+        dest: 'public/dist/built.js'
+      },
+      extra: {
+        src: [
+          'public/client/app.js',
+          'public/client/link.js',
+          'public/client/links.js',
+          'public/client/linkView.js',
+          'public/client/linksView.js', 'public/client/createLinkView.js',
+          'public/client/router.js'
+        ],
+        dest: 'public/dist/client.js'
+      }
     },
 
     mochaTest: {
@@ -21,11 +41,25 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      dist: {
+        files: {
+          'public/dist/built.min.js': ['public/dist/built.js'],
+          'public/dist/client.min.js': ['public/dist/client.js']
+        }
+      }
     },
 
     eslint: {
       target: [
         // Add list of files to lint here
+        'server.js',
+        'server-config.js',
+        'public/client/**/*.js',
+        'lib/*.js',
+        'app/*.js',
+        'app/collections/*.js',
+        'app/models/*.js'
+
       ]
     },
 
@@ -64,8 +98,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
 
-  grunt.registerTask('server-dev', function (target) {
-    grunt.task.run([ 'nodemon', 'watch' ]);
+  grunt.registerTask('server-dev', function(target) {
+    grunt.task.run(['nodemon', 'watch']);
   });
 
   ////////////////////////////////////////////////////
@@ -76,20 +110,25 @@ module.exports = function(grunt) {
     'mochaTest'
   ]);
 
+  grunt.registerTask('default', [
+    'nodemon'
+  ]);
+
   grunt.registerTask('build', [
+    'eslint', 'test', 'concat', 'uglify'
   ]);
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
       // add your production server task here
     } else {
-      grunt.task.run([ 'server-dev' ]);
+      grunt.task.run(['server-dev']);
     }
   });
 
   grunt.registerTask('deploy', [
     // add your deploy tasks here
+    'build', 'nodemon'
   ]);
-
 
 };
