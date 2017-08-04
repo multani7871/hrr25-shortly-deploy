@@ -133,10 +133,10 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('deploy', function (n) {
+  grunt.registerTask('deploy', function(n) {
     if (grunt.option('prod')) {
       grunt.task.run(['build', 'shell']);
-    } else {
+    } else if (grunt.option('dev')) {
       grunt.task.run(['build']);
     }
   });

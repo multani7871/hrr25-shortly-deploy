@@ -4,6 +4,7 @@ var expect = require('chai').expect;
 var app = require('../server-config.js');
 
 var db = require('../app/config');
+
 var User = require('../app/models/user');
 var Link = require('../app/models/link');
 
@@ -11,7 +12,7 @@ var Link = require('../app/models/link');
 // NOTE: these tests are designed for mongo!
 /////////////////////////////////////////////////////
 
-xdescribe('', function() {
+describe('', function() {
 
   beforeEach(function(done) {
     // Log out currently signed in user
@@ -176,7 +177,7 @@ xdescribe('', function() {
         .post('/signup')
         .send({
           'username': 'Svnh',
-          'password': 'Svnh' })
+          'password': 'Svnh'})
         .expect(302)
         .expect(function() {
           User.findOne({'username': 'Svnh'})
@@ -192,7 +193,7 @@ xdescribe('', function() {
         .post('/signup')
         .send({
           'username': 'Phillip',
-          'password': 'Phillip' })
+          'password': 'Phillip'})
         .expect(302)
         .expect(function(res) {
           expect(res.headers.location).to.equal('/');
@@ -221,7 +222,7 @@ xdescribe('', function() {
         .post('/login')
         .send({
           'username': 'Phillip',
-          'password': 'Phillip' })
+          'password': 'Phillip'})
         .expect(302)
         .expect(function(res) {
           expect(res.headers.location).to.equal('/');
@@ -234,7 +235,7 @@ xdescribe('', function() {
         .post('/login')
         .send({
           'username': 'Fred',
-          'password': 'Fred' })
+          'password': 'Fred'})
         .expect(302)
         .expect(function(res) {
           expect(res.headers.location).to.equal('/login');
