@@ -43,6 +43,7 @@ describe('', function() {
     describe('Shortening links:', function() {
 
       it('Responds with the short code', function(done) {
+        this.timeout(5000);
         request(app)
           .post('/links')
           .send({
