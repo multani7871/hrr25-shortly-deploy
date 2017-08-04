@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-mongoURI = 'mongodb://localhost/shortlydb';
+mongoURI = 'mongodb://harvey1:none@ds157258.mlab.com:57258/hm-shortlydeploy-testing';
 mongoose.connect(mongoURI);
 
 // Run in seperate terminal window using 'mongod'
